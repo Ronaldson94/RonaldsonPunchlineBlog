@@ -1,0 +1,42 @@
+
+{% extends 'base.html'%}
+
+
+{% block content %}
+{% for punchline in punchlines %}
+<br>
+<br>
+<br>
+<br>
+		<article class="media content-section">
+			<div class="media-body">
+				<div class="article-metadata">
+					<small class="text-muted">poster par  {{ punchline.poster_par }} </small>
+					<small class="text-muted">ID: {{ punchline.id }} </small>
+					<small class="text-muted"> le {{ punchline.date_poste|date:"F d ,Y"}} </small>
+				</div>
+				<img class="rounded-circle article-img" src="{{ rappeur.album_set.all }}" alt="">
+				<a class="mr-2" href="#"> {{ punchline.rappeur }}</a>
+				<h5>«{{ punchline.punchline_contenu }}»</h5>
+				<hr>
+            <a href="{% url 'punchline_detail' pk=punchline.pk %}">Comments: {{ punchline.comments.count }}</a>
+					<strong><p class="article-content">  </p>	</strong>
+
+
+					{% for comment in punchline.comments.all %}
+						<div class="comment">
+							<strong>{{ comment.auteur }}</strong>
+								<div class="date">{{ comment.date_comment }}</div>
+								<p>{{ comment.text|linebreaks }}</p>
+								<hr>
+						</div>
+					{% empty %}
+						<p>No comments here yet :(</p>
+					{% endfor %}
+			</div>
+
+					
+			</article>
+{% endfor %}
+
+{% endblock content %}
